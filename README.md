@@ -6,7 +6,7 @@ Movie App
   
 <h4>This app is build for my Student projects. This app includes features like moives of ur favourite || searching of ur desire movies && your fav casts, etc.. </h4>
 
-  <h3>Special thanks to <a href ="https://www.themoviedb.org/"> The MovieDB </a></h3>
+  <h3>Special thanks to <a href ="https://www.themoviedb.org/"> The MovieDB </a> and giving me like a amazing experience</h3>
 
 <p float="left">
   <img name = "Home Screen I" src="https://github.com/ChinGyi2019/PADC-IOS-BATCH-11-MOVIE-APP/blob/main/dummy_movie_app/dummy00001.png" width="200" height="400" />
