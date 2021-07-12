@@ -1,21 +1,87 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ShowTimeTableViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="182" id="KGk-i7-Jjw" customClass="ShowTimeTableViewCell" customModule="MovieApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="183"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+            <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="436" height="183"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIk-re-de8">
+                        <rect key="frame" x="10" y="10" width="416" height="160"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check Moive Show Times" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hj1-Lx-UFM">
+                                <rect key="frame" x="20" y="10" width="218" height="59"/>
+                                <fontDescription key="fontDescription" name="GeezaPro-Bold" family="Geeza Pro" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="see all" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1ar-hr-Kwq">
+                                <rect key="frame" x="20" y="123" width="48.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" name="color_yellow"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="location_icon" translatesAutoresizingMaskIntoConstraints="NO" id="T20-jW-lTP">
+                                <rect key="frame" x="362.5" y="63.5" width="33.5" height="33"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" name="color_show_time"/>
+                        <constraints>
+                            <constraint firstItem="Hj1-Lx-UFM" firstAttribute="leading" secondItem="gIk-re-de8" secondAttribute="leading" constant="20" id="34k-sR-m4s"/>
+                            <constraint firstItem="1ar-hr-Kwq" firstAttribute="leading" secondItem="gIk-re-de8" secondAttribute="leading" constant="20" id="6aC-YE-rBR"/>
+                            <constraint firstItem="T20-jW-lTP" firstAttribute="centerY" secondItem="gIk-re-de8" secondAttribute="centerY" id="ChN-IA-GnR"/>
+                            <constraint firstAttribute="bottom" secondItem="1ar-hr-Kwq" secondAttribute="bottom" constant="16" id="OTU-Wh-lFX"/>
+                            <constraint firstAttribute="height" constant="160" id="XAA-0t-kba"/>
+                            <constraint firstAttribute="trailing" secondItem="T20-jW-lTP" secondAttribute="trailing" constant="20" id="d2M-y9-MBv"/>
+                            <constraint firstItem="Hj1-Lx-UFM" firstAttribute="top" secondItem="gIk-re-de8" secondAttribute="top" constant="10" id="tXd-ye-fst"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" name="primary_color"/>
+                <constraints>
+                    <constraint firstItem="Hj1-Lx-UFM" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.5" id="FSC-EA-aOm"/>
+                    <constraint firstItem="gIk-re-de8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="j39-hs-DQm"/>
+                    <constraint firstAttribute="bottom" secondItem="gIk-re-de8" secondAttribute="bottom" constant="10" id="pCq-57-cUT"/>
+                    <constraint firstAttribute="trailing" secondItem="gIk-re-de8" secondAttribute="trailing" constant="10" id="ujJ-ie-hs2"/>
+                    <constraint firstItem="gIk-re-de8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="yQx-jd-FLD"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="lblSeeMore" destination="1ar-hr-Kwq" id="pqQ-tc-3fE"/>
+                <outlet property="viewForBackground" destination="gIk-re-de8" id="bYx-cG-DGH"/>
+            </connections>
+            <point key="canvasLocation" x="-43.478260869565219" y="-89.397321428571431"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="location_icon" width="33.333332061767578" height="33.333332061767578"/>
+        <namedColor name="color_show_time">
+            <color red="0.12200000137090683" green="0.14900000393390656" blue="0.20000000298023224" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="color_yellow">
+            <color red="0.9309999942779541" green="0.77399998903274536" blue="0.27000001072883606" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="primary_color">
+            <color red="0.032999999821186066" green="0.11299999803304672" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
 </document>

@@ -10,9 +10,19 @@ import Foundation
 struct MovieGenreList : Codable {//Decodable aslo can be used but for covering both encoding & decoding process
     let genres : [MovieGenre]?
 }
-struct MovieGenre : Codable {
+ struct MovieGenre : Codable {
    let  id : Int?
     let name : String?
+    
+    enum CodingKeys : String, CodingKey {
+        case name 
+        case id
+    }
+    
+   public func convertToVOGenre() -> GenreVO {
+        let vo = GenreVO(id: id ?? 0, name: name ?? "", isSelected: false)
+        return vo
+    }
 }
 
 struct LoginSuccess : Codable{

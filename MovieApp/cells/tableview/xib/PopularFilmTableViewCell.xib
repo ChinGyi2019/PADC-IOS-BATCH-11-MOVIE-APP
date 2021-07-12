@@ -1,21 +1,76 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="PopularFilmTableViewCell" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="340" id="KGk-i7-Jjw" customClass="PopularFilmTableViewCell" customModule="MovieApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="425" height="322"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <rect key="frame" x="0.0" y="0.0" width="425" height="322"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="XQ3-kA-NlX">
+                        <rect key="frame" x="0.0" y="67" width="425" height="255"/>
+                        <color key="backgroundColor" name="primary_color"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="255" id="eoX-rr-Pzf"/>
+                        </constraints>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jPm-69-Xdl">
+                            <size key="itemSize" width="128" height="250"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                    </collectionView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Popular Film and Series" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0na-0b-Apz">
+                        <rect key="frame" x="20" y="16" width="195.5" height="35"/>
+                        <color key="backgroundColor" name="primary_color"/>
+                        <fontDescription key="fontDescription" name="GeezaPro-Bold" family="Geeza Pro" pointSize="17"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="highlightedColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="see more" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="guv-de-aWX">
+                        <rect key="frame" x="338" y="0.0" width="71" height="67"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" name="primary_color"/>
+                <constraints>
+                    <constraint firstItem="XQ3-kA-NlX" firstAttribute="top" secondItem="guv-de-aWX" secondAttribute="bottom" id="82I-8R-Iui"/>
+                    <constraint firstAttribute="bottom" secondItem="XQ3-kA-NlX" secondAttribute="bottom" id="BJj-Aq-AkV"/>
+                    <constraint firstItem="0na-0b-Apz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="J22-Z8-3bz"/>
+                    <constraint firstItem="0na-0b-Apz" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="KvN-Ab-xvH"/>
+                    <constraint firstAttribute="trailing" secondItem="guv-de-aWX" secondAttribute="trailing" constant="16" id="PpH-cb-E5W"/>
+                    <constraint firstItem="XQ3-kA-NlX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="U1Z-14-EfD"/>
+                    <constraint firstAttribute="trailing" secondItem="XQ3-kA-NlX" secondAttribute="trailing" id="Vcq-YK-wRX"/>
+                    <constraint firstItem="guv-de-aWX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fC2-R3-jbl"/>
+                    <constraint firstItem="XQ3-kA-NlX" firstAttribute="top" secondItem="0na-0b-Apz" secondAttribute="bottom" constant="16" id="yub-GU-bI6"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="lblMoreMovies" destination="guv-de-aWX" id="iA2-t5-JVg"/>
+                <outlet property="lblTitle" destination="0na-0b-Apz" id="ykU-uI-5GY"/>
+                <outlet property="popularFilmCollectionView" destination="XQ3-kA-NlX" id="2L5-D6-yNM"/>
+            </connections>
+            <point key="canvasLocation" x="-804" y="-324"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <namedColor name="primary_color">
+            <color red="0.032999999821186066" green="0.11299999803304672" blue="0.16500000655651093" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
 </document>

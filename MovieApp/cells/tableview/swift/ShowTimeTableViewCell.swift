@@ -8,16 +8,24 @@
 import UIKit
 
 class ShowTimeTableViewCell: UITableViewCell {
+   
+    @IBOutlet weak var lblSeeMore: UILabel!
+    @IBOutlet weak var viewForBackground: UIView!
 
+  
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        lblSeeMore.underLineText(text: "SEE MORE", stroke: 2)
+        
     }
 
+   
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        if selected {
+            self.backgroundColor = UIColor(named: "color_primary")
+        }
     }
     
 }

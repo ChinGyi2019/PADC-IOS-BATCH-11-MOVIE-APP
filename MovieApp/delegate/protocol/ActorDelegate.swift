@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+
+protocol ActorDelegate{
+    
+    func onTabFavourite(isSelected : Bool)
+    
+    func onTabLike(isLiked : Bool)
+    
+   
+    
+}
+
+protocol ActorItemDelegate : class { //inherient class means purpose only for class
+    func didTabActor(id : Int)
+}

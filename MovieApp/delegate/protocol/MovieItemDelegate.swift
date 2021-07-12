@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+protocol MovieItemDelegate {
+
+    func onTapMovie(id : Int, isSeries : Bool)
+    
+}
+
+protocol MoreMovieItemDelegate {
+
+    func onTapMoreMovies()
+    
+}
