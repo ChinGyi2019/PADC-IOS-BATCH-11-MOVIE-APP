@@ -22,11 +22,10 @@ class BestActorsTableViewCell: UITableViewCell, ActorDelegate{
         debugPrint("isFavourite \(isSelected)")
     }
     
-    var data : ActorListResponse?{
+    var data = [ActorInfo](){
         didSet{
-            if let _ = data{
-                collectionViewBestActors.reloadData()
-            }
+            collectionViewBestActors.reloadData()
+            
         }
     }
 
@@ -75,7 +74,7 @@ extension BestActorsTableViewCell :  UICollectionViewDataSource, UICollectionVie
         return CGSize(width: width, height:height)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return data?.results?.count ?? 0
+        return data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -85,13 +84,13 @@ extension BestActorsTableViewCell :  UICollectionViewDataSource, UICollectionVie
     
         cell.delegate = self
        
-        cell.data = data?.results?[indexPath.row]
+        cell.data = data[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = data?.results?[indexPath.row]
-        delegate?.didTabActor(id: item?.id ?? -1)
+        let item = data[indexPath.row]
+        delegate?.didTabActor(id: item.id ?? -1)
         
         
     }

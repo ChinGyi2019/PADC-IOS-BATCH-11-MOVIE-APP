@@ -22,7 +22,7 @@ class SearchMovieViewController: UIViewController {
     private var currentQuery : String? = ""
 
     var initData : MovieListResponse?
-    private let networkingAgent = MovieDBNetwrokingAgent.shared
+    private let searchMovieModel : SearchModel = SearchModelImpl.shared
     
    // private var data : Set<MovieResult> = []
     private var data : [MovieResult] = []
@@ -79,7 +79,7 @@ class SearchMovieViewController: UIViewController {
     
     fileprivate func fetchSearchMovies(searchQuery : String, page : Int){
         print(page)
-        networkingAgent.getSearchedMovieList(searchQuery : searchQuery, page: page) { result in
+        searchMovieModel.getSearchedMovieList(searchQuery : searchQuery, page: page) { result in
             
             switch result{
             case .success(let data):

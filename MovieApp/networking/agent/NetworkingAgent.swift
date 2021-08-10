@@ -10,25 +10,35 @@ import Alamofire
 
 protocol MovieDBNetworkAgentProtocol {
     
+    //MARK:- Details
    func getMovieTrailer(id: Int, completion : @escaping (MovieDBResult< MovieTrailerResponse>) -> Void)
     
     func getSimilarMovies(id: Int, completion : @escaping (MovieDBResult<MovieListResponse>) -> Void)
     
     func getMoviesCredits(id : Int, completion : @escaping (MovieDBResult<MovieCastListResponse>) -> Void)
     
+    func getActorCombinedCredits(id : Int, completion : @escaping (MovieDBResult<ActorCombinedCreditsResponse>) -> Void)
+    
+    func getMovieDetails(id : Int, completion : @escaping (MovieDBResult<MovieDetailsResponse>) -> Void)
+    
+    //MARK:- Series
     func getSeriesCredits(id : Int, completion : @escaping (MovieDBResult<MovieCastListResponse>) -> Void)
     
     func getSeriesDetails(id : Int, completion : @escaping (MovieDBResult<MovieDetailsResponse>) -> Void)
     
-    func getMovieDetails(id : Int, completion : @escaping (MovieDBResult<MovieDetailsResponse>) -> Void)
-    
+   
+    //MARK:- Actor
     func getActorDetails(id : Int,completion : @escaping (MovieDBResult<ActorDetailsResponse>) -> Void)
     
-    func getActorCombinedCredits(id : Int, completion : @escaping (MovieDBResult<ActorCombinedCreditsResponse>) -> Void)
-    
     func getActorsList(page : Int , completion : @escaping (MovieDBResult<ActorListResponse>) -> Void)
-    
+
+    //MARK:- Search
     func getSearchedMovieList(searchQuery : String, page : Int, completion : @escaping (MovieDBResult<MovieListResponse>) -> Void)
+    
+    
+    
+    //MARK:- MovieModel
+   
     
     func getTopRatedMovieList(page : Int, completion : @escaping (MovieDBResult<MovieListResponse>) -> Void)
     

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 struct MovieGenreList : Codable {//Decodable aslo can be used but for covering both encoding & decoding process
     let genres : [MovieGenre]?
@@ -23,6 +24,15 @@ struct MovieGenreList : Codable {//Decodable aslo can be used but for covering b
         let vo = GenreVO(id: id ?? 0, name: name ?? "", isSelected: false)
         return vo
     }
+    
+    public func toGenreEntity(context : NSManagedObjectContext) -> GenreEntitiy {
+        
+        let entity = GenreEntitiy(context: context)
+        entity.id = String(id ?? 0)
+        entity.name = name
+        
+        return entity
+     }
 }
 
 struct LoginSuccess : Codable{

@@ -72,7 +72,7 @@ class MovieDetailsViewController: UIViewController {
     
     
     
-    private let networkAgent = MovieDBNetwrokingAgent.shared
+    private let movieDetailModel : MovieDetailsModel = MovieDetailsImpl.shared
     var movieID = -1
     var isSeries = false
     
@@ -141,7 +141,7 @@ class MovieDetailsViewController: UIViewController {
     
     //MARK: - Business Logic
     func fetchMovieTrailers(movieId : Int)  {
-        networkAgent.getMovieTrailer(id: movieID) { [weak self] (result) in
+        movieDetailModel.getMovieTrailer(id: movieID) { [weak self] (result) in
             guard let self = self else {return}
             switch result{
             case .success(let data) :
@@ -166,12 +166,12 @@ class MovieDetailsViewController: UIViewController {
     
     
     func fetchSimilarMovies(movieId : Int)  {
-        networkAgent.getSimilarMovies(id: movieID) { [weak self] (result) in
+        movieDetailModel.getSimilarMovies(id: movieID) { [weak self] (result) in
             guard let self = self else {return}
             
             switch result{
             case .success(let data):
-                self.similarMovies = data.results ?? [MovieResult]()
+                self.similarMovies = data 
                 self.collectionViewSimilarMovies.reloadData()
             case .failure(let error):
                 self.similarMovies =  [MovieResult]()
@@ -184,12 +184,12 @@ class MovieDetailsViewController: UIViewController {
     }
     
     func  fetchMovieCasts(movieId : Int)  {
-        networkAgent.getMoviesCredits(id: movieId) {[weak self] (result) in
+        movieDetailModel.getMoviesCredits(id: movieId) {[weak self] (result) in
             guard let self = self else {return}
             
             switch result{
             case .success(let data):
-                self.movieCasts =  data.cast ?? [Cast]()
+                self.movieCasts =  data
                 self.collectionViewAcotrs.reloadData()
             case .failure(let error):
                 print(error.description)
@@ -202,12 +202,12 @@ class MovieDetailsViewController: UIViewController {
     }
     
     func  fetchSeriesCasts(movieId : Int)  {
-        networkAgent.getSeriesCredits(id: movieId) {[weak self] (result) in
+        movieDetailModel.getSeriesCredits(id: movieId) {[weak self] (result) in
             guard let self = self else {return}
             
             switch result{
             case .success(let data):
-                self.movieCasts =  data.cast ?? [Cast]()
+                self.movieCasts = data
                 self.collectionViewAcotrs.reloadData()
             case .failure(let error):
                 print(error.description)
@@ -223,7 +223,7 @@ class MovieDetailsViewController: UIViewController {
     
     func  fetchTVDetails(movieId : Int)  {
         
-        networkAgent.getSeriesDetails(id: movieId) {[weak self] (result) in
+        movieDetailModel.getSeriesDetails(id: movieId) {[weak self] (result) in
             guard let self = self else {return}
             //bind data
             switch result{
@@ -240,7 +240,7 @@ class MovieDetailsViewController: UIViewController {
     
     func  fetchMovieDetails(movieId : Int)  {
         
-        networkAgent.getMovieDetails(id: movieId) {[weak self] (result) in
+        movieDetailModel.getMovieDetails(id: movieId) {[weak self] (result) in
             guard let self = self else {return}
             //bind data
             switch result{
@@ -258,7 +258,11 @@ class MovieDetailsViewController: UIViewController {
         productionCompanyList = data.productionCompanies ?? [ProductionCompany]()
         collectionViewProductionCompany.reloadData()
         //ReleasedDate
-        lblMovieRelaeaseddate.text = String(data.releaseDate?.split(separator: "-")[0] ?? data.firstAirDate?.split(separator: "-")[0] ?? "")
+//        if let releaseDate = data.releaseDate{
+//            l String(releaseDate.split(separator: "-")[0] ) //firstAirDate?.split(separator: "-")[0] ?? "")
+//        }
+        lblMovieRelaeaseddate.text = data.releaseDate
+        
         //Votes
         lblVoteAverage.text = "\(data.voteCount ?? 0)"
         lblVoteCont.text = "\(data.voteAverage ?? 0.0) votes"

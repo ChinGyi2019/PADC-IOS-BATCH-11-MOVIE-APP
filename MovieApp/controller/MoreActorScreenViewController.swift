@@ -17,11 +17,13 @@ class MoreActorScreenViewController: UIViewController {
     private let numberOfItemPerRow = 3
     private var totalPages = 1
     private var currentPage = 1
-
-    var initData : ActorListResponse?
-    private let networkingAgent = MovieDBNetwrokingAgent.shared
+   
     
-    private var data:[ActorInfo] =  []
+    var initData : ActorListResponse?
+    
+    
+    private let actorModel : ActorModel = ActorModelImpl.shared
+    var data:[ActorInfo] =  []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,14 +31,14 @@ class MoreActorScreenViewController: UIViewController {
         initState()
         
         navigationItem.title = "Who's Your Favourite"
-       
+        
     }
     
     fileprivate func initState(){
-        currentPage = initData?.page ?? 1
-        totalPages = initData?.totalPages ?? 1
-        data.append(contentsOf: initData?.results ?? [ActorInfo]())
-        collectionViewActors.reloadData()
+        currentPage = 1 //initData?.page ?? 1
+        //totalPages = //initData?.totalPages ?? 1
+        //        data.append(contentsOf: initData?.results ?? [ActorInfo]())
+        //        collectionViewActors.reloadData()
     }
     
     fileprivate func registerCell(){
@@ -47,30 +49,30 @@ class MoreActorScreenViewController: UIViewController {
         collectionViewActors.registerForCell(identifier: BestActorsCollectionViewCell.identifier)
         //Adding sectionInset for CollectionView
         let layout = UICollectionViewFlowLayout()
-                layout.sectionInset = UIEdgeInsets(top: itemSpacing, left: itemSpacing, bottom: itemSpacing, right: itemSpacing)
-                layout.minimumLineSpacing = itemSpacing
-                layout.minimumInteritemSpacing = itemSpacing
-                self.collectionViewActors?.collectionViewLayout = layout
+        layout.sectionInset = UIEdgeInsets(top: itemSpacing, left: itemSpacing, bottom: itemSpacing, right: itemSpacing)
+        layout.minimumLineSpacing = itemSpacing
+        layout.minimumInteritemSpacing = itemSpacing
+        self.collectionViewActors?.collectionViewLayout = layout
     }
     
     fileprivate func fetchActorList(page : Int){
-        networkingAgent.getActorsList(page: page) { result in
+        actorModel.getActorsList(page: page) { result in
             
             switch result{
             case .success(let data):
-                self.data.append(contentsOf: data.results ?? [ActorInfo]())
+                self.data.append(contentsOf: data)
                 self.collectionViewActors.reloadData()
             case .failure(let error):
                 print(error)
             }
             
-           
+            
         }
-
+        
     }
-
-
-
+    
+    
+    
 }
 
 extension MoreActorScreenViewController : UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -88,11 +90,12 @@ extension MoreActorScreenViewController : UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let isLastRow = indexPath.row == (data.count - 1)
-        let hasMorePage = currentPage < totalPages
+        // let hasMorePage = currentPage < totalPages
         
-        if isLastRow && hasMorePage {
+        if isLastRow  {
             currentPage = currentPage + 1
             fetchActorList(page: currentPage)
+            
         }
     }
     

@@ -11,6 +11,7 @@
 //   let upcommingMovieList = try? newJSONDecoder().decode(UpcommingMovieList.self, from: jsonData)
 
 import Foundation
+import CoreData
 
 // MARK: - UpcommingMovieList
 struct MovieListResponse: Codable {
@@ -61,6 +62,30 @@ struct MovieResult: Codable, Hashable {
         case title, video
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+    }
+    
+    @discardableResult
+    func toMovieEntity(context : NSManagedObjectContext,
+                       groupType : BelongToTypeEntitiy) -> MovieEntity {
+        let entity = MovieEntity(context: context)
+        entity.id = Int32(id ?? 0)
+        entity.adult = adult ?? false
+        entity.backdropPath = backdropPath
+        entity.genreIDs = genreIDS?.map{ String($0) }.joined(separator: ",")
+        entity.originalLanguage = originalLanguage
+        entity.originalTitle = originalTitle
+        entity.originalName =  originalName
+        entity.overView = overview
+        entity.popularity = popularity ?? 0.0
+        entity.posterPath = posterPath
+        entity.releaseDate = releaseDate ?? ""
+        entity.title = title
+        entity.video = video ?? false
+        entity.voteAverage = voteAverage ?? 0.0
+        entity.voteCount = Int64(voteCount ?? 0)
+        entity.addToBelongToType(groupType)
+        
+        return entity
     }
     
 

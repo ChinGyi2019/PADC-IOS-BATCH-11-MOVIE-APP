@@ -17,11 +17,14 @@ class ShowCaseTableViewCell: UITableViewCell {
     var delegate  : MovieItemDelegate? = nil
     var showMoreCasesDelegate : ShowMoreShowCasesDelegate? = nil
     
-    var data : MovieListResponse?{
+    var data  = [MovieResult](){ //MovieListResponse?
         didSet{
-            if let _ = data{
+        
+            if !data.isEmpty{
                 collectionViewShowCase.reloadData()
             }
+               
+        
             
         }
     }
@@ -69,7 +72,7 @@ extension ShowCaseTableViewCell : UICollectionViewDataSource, UICollectionViewDe
         return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        data.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -77,7 +80,8 @@ extension ShowCaseTableViewCell : UICollectionViewDataSource, UICollectionViewDe
             return UICollectionViewCell()
         }
         
-        cell.data = data?.results?[indexPath.row]
+        cell.data = data[indexPath.row ]
+
         return cell
     }
     
@@ -91,8 +95,8 @@ extension ShowCaseTableViewCell : UICollectionViewDataSource, UICollectionViewDe
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = data?.results?[indexPath.row]
-        delegate?.onTapMovie(id: item?.id ?? -1 , isSeries: false)
+        let item = data[indexPath.row]
+        delegate?.onTapMovie(id: item.id ?? -1 , isSeries: false)
     }
     
     

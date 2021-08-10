@@ -15,7 +15,7 @@
         <!--Discover-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MovieApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="MovieApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -45,7 +45,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="movieHostTableView" destination="usC-NG-Qwk" id="4P5-M2-QUn"/>
+                        <outlet property="movieHostTableView" destination="usC-NG-Qwk" id="u5l-v8-FGp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -111,10 +111,10 @@
                                                                                 <rect key="frame" x="32" y="89" width="237.5" height="70.5"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PlJ-Mf-km3">
-                                                                                        <rect key="frame" x="187.5" y="0.0" width="50" height="70.5"/>
+                                                                                        <rect key="frame" x="189.5" y="0.0" width="48" height="36.5"/>
                                                                                         <subviews>
-                                                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oB9-43-wvm" customClass="RatingControl" customModule="MovieApp" customModuleProvider="target">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oB9-43-wvm" customClass="RatingControl" customModule="MovieApp" customModuleProvider="target">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="48" height="16"/>
                                                                                                 <userDefinedRuntimeAttributes>
                                                                                                     <userDefinedRuntimeAttribute type="size" keyPath="starSize">
                                                                                                         <size key="value" width="16" height="16"/>
@@ -127,8 +127,8 @@
                                                                                                     </userDefinedRuntimeAttribute>
                                                                                                 </userDefinedRuntimeAttributes>
                                                                                             </stackView>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="8.7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="v4j-0x-Mz4">
-                                                                                                <rect key="frame" x="0.0" y="50" width="50" height="20.5"/>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8.7" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="v4j-0x-Mz4">
+                                                                                                <rect key="frame" x="0.0" y="16" width="48" height="20.5"/>
                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                                                 <color key="textColor" systemColor="opaqueSeparatorColor"/>
                                                                                                 <nil key="highlightedColor"/>

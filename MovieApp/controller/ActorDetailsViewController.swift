@@ -18,6 +18,7 @@ class ActorDetailsViewController: UIViewController{
     @IBOutlet weak var ivActorBackDrop: UIImageView!
     
     private let networkingAgent = MovieDBNetwrokingAgent.shared
+    private let actorModel = ActorModelImpl.shared
     private var credits : [MovieResult] = []
     private var homeURL : String = ""
     
@@ -54,7 +55,7 @@ class ActorDetailsViewController: UIViewController{
     }
     //MARK: - Business Logic
     fileprivate func fetchActorDetails(id : Int){
-        networkingAgent.getActorDetails(id: id) { [weak self] result in
+        actorModel.getActorDetails(id: id) { [weak self] result in
             guard let self = self else {return}
             
             switch result{
@@ -68,11 +69,11 @@ class ActorDetailsViewController: UIViewController{
     }
     
     fileprivate func fetchActorCombinedCredits(id : Int){
-        networkingAgent.getActorCombinedCredits(id: id) {[weak self] result in
+        actorModel.getActorCombinedCredits(id: id) {[weak self] result in
             guard let self = self else {return}
             switch result{
             case .success(let data):
-                self.credits = data.cast ?? [MovieResult]()
+                self.credits = data 
                 self.collectionViewCredits.reloadData()
             case .failure(let error):
                 print(error)

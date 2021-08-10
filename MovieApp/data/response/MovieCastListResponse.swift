@@ -11,6 +11,7 @@
 //   let movieCastListResponse = try? newJSONDecoder().decode(MovieCastListResponse.self, from: jsonData)
 
 import Foundation
+import CoreData
 
 // MARK: - MovieCastListResponse
 struct MovieCastListResponse: Codable {
@@ -53,6 +54,10 @@ struct Cast: Codable {
                          popularity: self.popularity,
                          profilePath: self.profilePath)
     }
+    
+    
+    
+   
    
 }
 

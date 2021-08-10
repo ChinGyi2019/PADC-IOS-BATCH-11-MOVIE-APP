@@ -19,27 +19,21 @@ class MoreMoviesViewController: UIViewController {
     
     var movieOrSeries : MovieOrSeries = .movie
 
-    var initData : MovieListResponse?
+   
     private let networkingAgent = MovieDBNetwrokingAgent.shared
+    private let movieModel = MovieModelImpl.shared
     
-    private var data:[MovieResult] =  []
-    var navigationTitle = "Explore Your Desires"
+    var data:[MovieResult] =  []
+    private let navigationTitle = "Explore Your Desires"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
-        initState()
-        
         navigationItem.title = navigationTitle
        
     }
     
-    fileprivate func initState(){
-        currentPage = initData?.page ?? 1
-        totalPages = initData?.totalPages ?? 1
-        data.append(contentsOf: initData?.results ?? [MovieResult]())
-        collectionViewMovies.reloadData()
-    }
+ 
     
     fileprivate func registerCell(){
         collectionViewMovies.dataSource = self
@@ -66,14 +60,13 @@ class MoreMoviesViewController: UIViewController {
     }
     
     fileprivate func fetchMoivesList(page : Int){
-        networkingAgent.getPopularMovieList(page: page) { result in
+        movieModel.getPopularMovieList(page: page) { result in
             
             switch result{
             case .success(let data):
-                self.data.append(contentsOf: data.results ?? [MovieResult]())
+                self.data.append(contentsOf: data)
                 self.collectionViewMovies.reloadData()
-                self.currentPage = data.page ?? 1
-                self.totalPages = data.totalPages ?? 1
+    
             case .failure(let error):
                 print(error)
             }
@@ -85,14 +78,13 @@ class MoreMoviesViewController: UIViewController {
     
     
     fileprivate func fetchTvSeriesList(page : Int){
-        networkingAgent.getPopularSerieList(page: page) { result in
+        movieModel.getPopularSerieList(page: page) { result in
             
             switch result{
             case .success(let data):
-                self.data.append(contentsOf: data.results ?? [MovieResult]())
+                self.data.append(contentsOf: data)
                 self.collectionViewMovies.reloadData()
-                self.currentPage = data.page ?? 1
-                self.totalPages = data.totalPages ?? 1
+            
             case .failure(let error):
                 print(error)
             }
@@ -119,9 +111,9 @@ extension MoreMoviesViewController : UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let isLastRow = indexPath.row == (data.count - 1)
-        let hasMorePage = currentPage < totalPages
+        //let hasMorePage = currentPage < totalPages
         
-        if isLastRow && hasMorePage {
+        if isLastRow{
             currentPage = currentPage + 1
             setUpNetwrokCall(page: currentPage)
         }

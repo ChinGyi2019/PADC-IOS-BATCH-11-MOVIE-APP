@@ -8,14 +8,14 @@
 import UIKit
 
 class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, ShowMoreActorsDelegate, ShowMoreShowCasesDelegate{
-   
     
+    //MARK:- Navigation Method
     func didTabMoreShowCases() {
-        navigateToShowMoreShowCasesViewController(movieResponse: movieListResponse)
+        navigateToShowMoreShowCasesViewController(movies: topRatedMovieList)
     }
     
     func didTabMoreActors() {
-        navigateToShowMoreActorsViewController(actorResponse: actorListResponse)
+        navigateToShowMoreActorsViewController(initActors: actorList)
     }
     
     func didTabActor(id: Int) {
@@ -23,43 +23,94 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
         navigateToActorDetailsViewController(id: id)
     }
     
-   
+    //MARK:- IBOutlet
+    @IBAction func onTapSearchImageIcon(_ sender : Any){
+        navigateToSearchMovieViewController()
+    }
     
-//    @IBOutlet weak var labelTitle: UILabel!
-//    @IBOutlet weak var ivLineWeight: UIImageView!
-//    @IBOutlet weak var ivSearch: UIImageView!
     @IBOutlet weak var movieHostTableView: UITableView!
-//    @IBOutlet weak var toolbarView: UIView!
     
-    private var upCommingMovieList : MovieListResponse?
-    private var popularMovieList : MovieListResponse?
-    private var popularSeriesList : MovieListResponse?
-    private var topRatedMovieList : MovieListResponse?
-    private var actorList : ActorListResponse?
-    private var genreList : MovieGenreList?
-    private var actorListResponse : ActorListResponse? = nil
+    private let refreshControl = UIRefreshControl()
+    
+    
+    
+    //MARK:- Properties
+    private var upCommingMovieList  =  [MovieResult]()
+    private var popularMovieList  =  [MovieResult]()
+    private var popularSeriesList  =  [MovieResult]()
+    private var topRatedMovieList  = [MovieResult]()
+    private var actorList = [ActorInfo]()
+    private var genreList = [MovieGenre]()
+    private var actorListResponse  :ActorListResponse? = nil
     private var movieListResponse : MovieListResponse? = nil
-    private var popularMovieListResponse : MovieListResponse? = nil
-    private var popularSeriesListResponse : MovieListResponse? = nil
+    private var popularMovieListResponse =  [MovieResult]()
+    private var popularSeriesListResponse =  [MovieResult]()
+    private let movieModel : MovieModel = MovieModelImpl.shared
+    private let actorModel : ActorModel = ActorModelImpl.shared
+    private let movieModelWithURLSession = NetworkAgentWithURLSession.shared
     
-    
-    private let netwrokingAgent = MovieDBNetwrokingAgent.shared
-    private let netwrokingAgentWithURLSession = NetworkAgentWithURLSession.shared
+    //MARK:- LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
         
         movieHostTableView.dataSource = self
         if #available(iOS 14.0, *) {
             navigationItem.backBarButtonItem = UIBarButtonItem(title : "")
         } else {
-            // Fallback on earlier versions
+            
         }
+    
+        initView()
         
-        
+    }
+    
+    
+    //MARK:- View Init
+    
+    private func initView(){
         //Registering
         registerTableViewCell()
         
+        handleRefreshControl()
+        //Call Network
+        callNetwork()
+       
+    }
+    
+    private func registerTableViewCell(){
+        
+        movieHostTableView.registerForCell(identifier:MovieSliderTableViewCell.identifier)
+        
+        movieHostTableView.registerForCell(identifier: PopularFilmTableViewCell.identifier)
+        
+        movieHostTableView.registerForCell(identifier: ShowCaseTableViewCell.identifier)
+        
+        movieHostTableView.registerForCell(identifier: GenreTableViewCell.identifier)
+        
+        movieHostTableView.registerForCell(identifier: ShowTimeTableViewCell.identifier)
+        
+        movieHostTableView.registerForCell(identifier: BestActorsTableViewCell.identifier)
+    }
+    
+    private func handleRefreshControl(){
+        movieHostTableView.addSubview(refreshControl)
+        refreshControl.tintColor = .white
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    
+    @objc func refreshData(_ sender : Any){
+        callNetwork()
+        DispatchQueue.main.async {
+            self.refreshControl.endRefreshing()
+        }
+       
+    
+        
+    }
+    
+    //MARK:- Network
+    private func callNetwork(){
         //Fetch Upcomming MovieList
         fetchUpCommingMovieList()
         //Fetch Popular MovieList
@@ -72,17 +123,10 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
         fetchTopRatedMovieList()
         //Fetch ActorsList
         fetchActorsList()
-        
     }
-    
-
-    @IBAction func onTapSearchImageIcon(_ sender : Any){
-        navigateToSearchMovieViewController()
-    }
-    
     
     fileprivate func fetchActorsList(){
-        netwrokingAgent.getActorsList{ (result) in
+        actorModel.getActorsList(page: 1){ (result) in
             
             switch result{
             case .success(let data):
@@ -93,13 +137,12 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
             }
             
             
-           
+            
         }
     }
     
     fileprivate func fetchTopRatedMovieList(){
-        netwrokingAgent.getTopRatedMovieList{ (result) in
-            
+        movieModel.getTopRatedMovieList(page: 1){ (result) in
             switch result{
             case .success(let data):
                 self.topRatedMovieList = data
@@ -113,7 +156,7 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
     }
     
     fileprivate func fetchGenreList(){
-        netwrokingAgent.getGenreList{ (result) in
+        movieModel.getGenreList{ (result) in
             switch result{
             case .success(let data):
                 self.genreList = data
@@ -125,24 +168,12 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
             
         }
         
-        /* URLSession Agent*/
-//        netwrokingAgentWithURLSession.getGenreList { result in
-//            switch result{
-//            case .success(let data):
-//                self.genreList = data
-//                DispatchQueue.main.async {
-//                    self.movieHostTableView.reloadSections(IndexSet(integer: MovieType.MOVIE_GNRE.rawValue), with: .fade)
-//                }
-//
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
+       
         
     }
     
     fileprivate func fetchPopularMovieList(){
-        netwrokingAgent.getPopularMovieList{ (result) in
+        movieModel.getPopularMovieList(page: 1){ (result) in
             
             switch result{
             case .success(let data):
@@ -158,22 +189,23 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
     }
     
     fileprivate func fetchPopularSerieList(){
-        netwrokingAgent.getPopularSerieList { (result) in
+        movieModel.getPopularSerieList(page: 1) { (result) in
             
             switch result{
             case .success(let data) :
                 self.popularSeriesList = data
+                
                 self.movieHostTableView.reloadSections(IndexSet(integer: MovieType.SERIE_POPULAR.rawValue), with: .fade)
                 self.popularSeriesListResponse = data
             case .failure(let error) : print(error)
             }
             
-           
+            
         }
     }
     
-     fileprivate func fetchUpCommingMovieList(){
-        netwrokingAgent.getUpcommingMovieList { (result) in
+    fileprivate func fetchUpCommingMovieList(){
+        movieModel.getUpcommingMovieList(page: 1) { (result) in
             
             switch result{
             case .success(let data) :
@@ -183,36 +215,24 @@ class ViewController: UIViewController , MovieItemDelegate, ActorItemDelegate, S
             }
             
         }
-
+        
     }
     
-    private func registerTableViewCell(){
-        
-        movieHostTableView.registerForCell(identifier:MovieSliderTableViewCell.identifier)
-        
-        movieHostTableView.registerForCell(identifier: PopularFilmTableViewCell.identifier)
-
-        movieHostTableView.registerForCell(identifier: ShowCaseTableViewCell.identifier)
-        
-        movieHostTableView.registerForCell(identifier: GenreTableViewCell.identifier)
-      
-        movieHostTableView.registerForCell(identifier: ShowTimeTableViewCell.identifier)
-    
-        movieHostTableView.registerForCell(identifier: BestActorsTableViewCell.identifier)
-    }
     
     func onTapMovie(id : Int, isSeries : Bool) {
-       navigateToMovieDetailsViewController(movieID: id, isSeries: isSeries)
+        navigateToMovieDetailsViewController(movieID: id, isSeries: isSeries)
     }
     
     
-
-
+    
+    
 }
 
+
+//MARK:- Extension
 extension ViewController : UITableViewDataSource{
     fileprivate func initForMoreMovie(label : UILabel, movieOrSeries : MovieOrSeries){
-      
+        
         switch(movieOrSeries){
         case .movie :
             //Register Gesture
@@ -225,14 +245,14 @@ extension ViewController : UITableViewDataSource{
             label.addGestureRecognizer(gestureForlblMoreMovies)
         }
         
-       
+        
     }
     
     @objc func onTapMoreMoives(){
-        navigateToMoreMoviesAndSeriesViewController(movieType: .movie, popularMovieListResponse)
+                navigateToMoreMoviesAndSeriesViewController(movieType: .movie, popularMovieList)
     }
     @objc func onTapMoreSeries(){
-        navigateToMoreMoviesAndSeriesViewController(movieType: .series, popularSeriesListResponse)
+                navigateToMoreMoviesAndSeriesViewController(movieType: .series, popularSeriesList)
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         7
@@ -260,7 +280,7 @@ extension ViewController : UITableViewDataSource{
             initForMoreMovie(label: cell.lblMoreMovies, movieOrSeries: .movie)
             cell.data = popularMovieList
             
-           return cell
+            return cell
             
         case MovieType.SERIE_POPULAR.rawValue:
             let cell = tableView.dequeueTableViewCell(identifier: PopularFilmTableViewCell.identifier, indexPath: indexPath) as PopularFilmTableViewCell
@@ -269,59 +289,57 @@ extension ViewController : UITableViewDataSource{
             cell.data = popularSeriesList
             initForMoreMovie(label: cell.lblMoreMovies, movieOrSeries: .series)
             
-           return cell
+            return cell
             
-           
-        
+            
+            
         case MovieType.MOVIE_SHOWTIME.rawValue:
             return tableView.dequeueTableViewCell(identifier: ShowTimeTableViewCell.identifier, indexPath: indexPath)
-          
+            
             
         case MovieType.MOVIE_GNRE.rawValue:
-             let cell =  tableView.dequeueTableViewCell(identifier: GenreTableViewCell.identifier, indexPath: indexPath) as GenreTableViewCell
+            let cell =  tableView.dequeueTableViewCell(identifier: GenreTableViewCell.identifier, indexPath: indexPath) as GenreTableViewCell
             cell.delegate = self
             
             
             
             //Init allMovieAndSeries in cell
             var movieList = [MovieResult]()
-            movieList.append(contentsOf: upCommingMovieList?.results ?? [MovieResult]())
-            movieList.append(contentsOf: popularMovieList?.results ?? [MovieResult]())
-            movieList.append(contentsOf: popularSeriesList?.results ?? [MovieResult]())
+            movieList.append(contentsOf: upCommingMovieList )
+            movieList.append(contentsOf: popularMovieList )
+            movieList.append(contentsOf: popularSeriesList )
             cell.allMovieAndSeries = movieList
             //init for genreList
-            let genreVOList = genreList?.genres?.map({ movieGenre -> GenreVO in
+            let genreVOList = genreList.map({ movieGenre -> GenreVO in
                 return movieGenre.convertToVOGenre()
             })
             cell.genreList = genreVOList
             //ViewController Level ka nay bae data ga sar ya tl
-            genreVOList?.first?.isSelected = true
+            genreVOList.first?.isSelected = true
             return cell
-           
+            
             
         case MovieType.MOVIE_SHOWCASE.rawValue:
-       let cell =  tableView.dequeueTableViewCell(identifier: ShowCaseTableViewCell.identifier, indexPath: indexPath) as ShowCaseTableViewCell
+            let cell =  tableView.dequeueTableViewCell(identifier: ShowCaseTableViewCell.identifier, indexPath: indexPath) as ShowCaseTableViewCell
             cell.delegate = self
             cell.showMoreCasesDelegate = self
             cell.data = topRatedMovieList
-            movieListResponse = topRatedMovieList
+            // movieListResponse = topRatedMovieList
             return cell
-           
-         
+            
+            
         case MovieType.MOVIE_BESTACTOR.rawValue:
             let cell =  tableView.dequeueTableViewCell(identifier: BestActorsTableViewCell.identifier, indexPath: indexPath) as
                 BestActorsTableViewCell
             cell.delegate = self
             cell.moreActorsDelegate = self
             cell.data = actorList
-            actorListResponse = actorList
             
-            
-        return cell
+            return cell
         default:
             return UITableViewCell()
         }
-       
+        
     }
     
     
@@ -329,3 +347,17 @@ extension ViewController : UITableViewDataSource{
     
 }
 
+
+/* URLSession Agent*/
+//        movieModelWithURLSession.getGenreList { result in
+//            switch result{
+//            case .success(let data):
+//                self.genreList = data
+//                DispatchQueue.main.async {
+//                    self.movieHostTableView.reloadSections(IndexSet(integer: MovieType.MOVIE_GNRE.rawValue), with: .fade)
+//                }
+//
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }

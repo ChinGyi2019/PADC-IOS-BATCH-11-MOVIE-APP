@@ -32,7 +32,7 @@ extension UIViewController{
         vc.movieID = movieID
         vc.isSeries = isSeries
         self.navigationController?.pushViewController(vc, animated: true)
-        // present(vc, animated: true)
+      
     }
     func navigateToHalfMovieDetailsViewController(movieID : Int, isSeries : Bool){
     
@@ -57,26 +57,26 @@ extension UIViewController{
          //present(vc, animated: true)
     }
     
-    func navigateToShowMoreActorsViewController(actorResponse : ActorListResponse?){
+    func navigateToShowMoreActorsViewController(initActors : [ActorInfo]){
     
          guard let vc = UIStoryboard.mainStoryBoard().instantiateViewController(identifier: MoreActorScreenViewController.identifier) as? MoreActorScreenViewController else {return}
         
         vc.modalPresentationStyle = .formSheet
         vc.modalTransitionStyle = .crossDissolve
-        vc.initData = actorResponse
+    
+        vc.data = initActors
         self.navigationController?.pushViewController(vc, animated: true)
-//         present(vc, animated: true)
     }
     
-    func navigateToShowMoreShowCasesViewController(movieResponse : MovieListResponse?){
+    func navigateToShowMoreShowCasesViewController(movies : [MovieResult]){
     
          guard let vc = UIStoryboard.mainStoryBoard().instantiateViewController(identifier: MoreShowCasesViewController.identifier) as? MoreShowCasesViewController else {return}
         
         vc.modalPresentationStyle = .formSheet
         vc.modalTransitionStyle = .crossDissolve
-        vc.initData = movieResponse
+        vc.data = movies
         self.navigationController?.pushViewController(vc, animated: true)
-         //present(vc, animated: true)
+    
     }
     
     func navigateToSearchMovieViewController(){
@@ -85,25 +85,25 @@ extension UIViewController{
         
         vc.modalPresentationStyle = .formSheet
         vc.modalTransitionStyle = .crossDissolve
-        //vc.initData = movieResponse
+       
         self.navigationController?.pushViewController(vc, animated: true)
-        // present(vc, animated: true)
+        
     }
     
     func navigateToYouTubeViewController(id : String){
     
-        let youTubeVC = YouTubePlayerViewController()        //let id = movieTrailers.first?.key
+        let youTubeVC = YouTubePlayerViewController()
         youTubeVC.youtubeId = id
         
         self.navigationController?.pushViewController(youTubeVC, animated: true)
     }
     
     
-    func navigateToMoreMoviesAndSeriesViewController(movieType : MovieOrSeries,_ response : MovieListResponse?){
+    func navigateToMoreMoviesAndSeriesViewController(movieType : MovieOrSeries,_ movies : [MovieResult]){
     
         let vc = MoreMoviesViewController()
         vc.movieOrSeries = movieType
-        vc.initData = response
+        vc.data = movies
 
         self.navigationController?.pushViewController(vc, animated: true)
     }

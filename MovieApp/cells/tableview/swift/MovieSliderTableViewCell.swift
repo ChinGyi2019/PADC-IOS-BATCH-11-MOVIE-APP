@@ -13,12 +13,12 @@ class MovieSliderTableViewCell: UITableViewCell {
     @IBOutlet weak var pageControl: UIPageControl!
     
     var delegate : MovieItemDelegate? = nil
-    var data : MovieListResponse?{
+    var data = [MovieResult](){
         didSet{
-            if let _ = data{
-                pageControl.numberOfPages = data?.results?.count ?? 0
+//            if let _ = data{
+                pageControl.numberOfPages = data.count 
                 movieSliderCollectionView.reloadData()
-            }
+//            }
             
         }
     }
@@ -47,20 +47,20 @@ extension MovieSliderTableViewCell : UICollectionViewDataSource, UICollectionVie
         return CGSize(width: frame.width, height: CGFloat(240))
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        data?.results?.count ?? 0
+        data.count
         
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       
         let cell =  collectionView.dequeueCell(identifer: MovieSliderCollectionViewCell.identifier, indexPath: indexPath) as! MovieSliderCollectionViewCell
-        cell.data =  data?.results?[indexPath.row]
+        cell.data =  data[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = data?.results?[indexPath.row]
-        delegate?.onTapMovie(id: item?.id ?? -1, isSeries: false)
+        let item = data[indexPath.row]
+        delegate?.onTapMovie(id: item.id ?? -1, isSeries: false)
        
     }
     
