@@ -5,6 +5,8 @@ Movie App
 <h2> The Movie App<h2>
   
 <h4>This app is build for my Student projects. This app includes features like moives of ur favourite || searching of ur desire movies && your fav casts, etc.. </h4>
+  <p>This App inculdes technoloty like fetch from Netwrok, Caching with CoreData and display to view.</p>  
+  
 
   <h3>Special thanks to <a href ="https://www.themoviedb.org/"> The MovieDB </a> for giving me like a amazing experiences</h3>
 
